@@ -1,0 +1,24 @@
+[project]
+name = "api-builder"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "", email = "" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "mcp[cli]",
+]
+
+[project.scripts]
+api-builder = "api_builder.server:main"
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.workspace]
+members = [
+    "demo-api",
+]
