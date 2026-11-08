@@ -1,5 +1,6 @@
 from mcp.server.mcpserver import MCPServer
-from api_builder import create_project_structure, update_dependencies
+from api_builder import create_project_structure, update_dependencies, create_db_structure
+
 
 mcp = MCPServer("APIBuilder")
 
@@ -12,6 +13,12 @@ def scaffold_api(project_name: str, target_dir: str = ".") -> str:
 def upgrade_deps(target_dir: str = ".") -> str:
     """Update dependencies for the uv project."""
     return update_dependencies(target_dir)
+
+@mcp.tool()
+def scaffold_database(project_name: str, target_dir: str = ".") -> str:
+    """Adds a PostgreSQL database structure (SQLAlchemy) to a project."""
+    return create_db_structure(project_name, target_dir)
+
 
 def main():
     mcp.run(transport="stdio")
