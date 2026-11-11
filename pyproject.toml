@@ -12,11 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-agent-tools = "agent_tools.server:main"
-
-[build-system]
-requires = ["uv_build>=0.13.5,<0.14.0"]
-build-backend = "uv_build"
+agent-tools = "server:main"
 
 [tool.uv.workspace]
 members = [
