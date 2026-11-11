@@ -1,5 +1,5 @@
-from mcp.server.mcpserver import MCPServer
-from builders import create_project_structure, update_dependencies, create_db_structure
+from mcp.server import MCPServer
+from .builders import create_project_structure, update_dependencies, create_db_structure
 
 
 mcp = MCPServer("Agenttools")
