@@ -1,8 +1,8 @@
 from mcp.server.mcpserver import MCPServer
-from api_builder import create_project_structure, update_dependencies, create_db_structure
+from builders import create_project_structure, update_dependencies, create_db_structure
 
 
-mcp = MCPServer("APIBuilder")
+mcp = MCPServer("Agenttools")
 
 @mcp.tool()
 def scaffold_api(project_name: str, target_dir: str = ".") -> str:
@@ -22,3 +22,6 @@ def scaffold_database(project_name: str, target_dir: str = ".") -> str:
 
 def main():
     mcp.run(transport="stdio")
+
+if __name__ == "__main__":
+    main()

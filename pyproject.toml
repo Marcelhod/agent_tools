@@ -1,18 +1,18 @@
 [project]
-name = "api-builder"
+name = "agent_tools"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 authors = [
     { name = "", email = "" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 dependencies = [
     "mcp[cli]",
 ]
 
 [project.scripts]
-api-builder = "api_builder.server:main"
+agent-tools = "agent_tools.server:main"
 
 [build-system]
 requires = ["uv_build>=0.13.5,<0.14.0"]
