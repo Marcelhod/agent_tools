@@ -2,11 +2,10 @@ from pathlib import Path
 import subprocess
 from .api import create_project_structure
 
-def create_auth_structure(target_path: str) -> str:
-    """Adds JWT authentication. Automatically creates the API if missing."""
-    path = Path(target_path).resolve()
+def create_auth_structure(project_path: str) -> str:
+    """Adds JWT authentication. Auto-creates the API if missing."""
+    path = Path(project_path).resolve()
     
-    # AUTO-HEAL
     if not path.exists():
         project_name = path.name
         target_dir = str(path.parent)
@@ -26,6 +25,6 @@ def create_auth_structure(target_path: str) -> str:
 
     try:
         subprocess.run(["uv", "add", "passlib[bcrypt]", "python-jose[cryptography]"], cwd=path, capture_output=True, text=True, check=True)
-        return f"Auth structure successfully added to {path}"
+        return f"Auth structure added to {path}"
     except subprocess.CalledProcessError as e:
         return f"Auth files created, but dependency install failed: {e.stderr}"

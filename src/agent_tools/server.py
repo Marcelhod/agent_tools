@@ -8,19 +8,19 @@ from .builders import (
 mcp = MCPServer("Agenttools")
 
 @mcp.tool()
-def scaffold_database(target_path: str) -> str:
-    """Adds a database to an existing project. If the project doesn't exist, it automatically creates it."""
-    return create_db_structure(target_path)
+def scaffold_database(project_path: str) -> str:
+    """Adds a database to a project. Pass the folder path e.g., 'projects/test-app'."""
+    return create_db_structure(project_path)
 
 @mcp.tool()
-def scaffold_auth(target_path: str) -> str:
-    """Adds JWT auth to an existing project."""
-    return create_auth_structure(target_path)
+def scaffold_auth(project_path: str) -> str:
+    """Adds JWT auth to a project. Pass the folder path e.g., 'projects/test-app'."""
+    return create_auth_structure(project_path)
 
 @mcp.tool()
-def scaffold_docker(target_path: str) -> str:
-    """Adds Docker Compose to an existing project."""
-    return create_docker_compose(target_path)
+def scaffold_docker(project_path: str) -> str:
+    """Adds Docker to a project. Pass the folder path e.g., 'projects/test-app'."""
+    return create_docker_compose(project_path)
 
 def main():
     mcp.run(transport="stdio")

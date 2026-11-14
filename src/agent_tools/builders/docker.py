@@ -1,11 +1,10 @@
 from pathlib import Path
 from .api import create_project_structure
 
-def create_docker_compose(target_path: str) -> str:
-    """Adds Docker Compose. Automatically creates the API if missing."""
-    path = Path(target_path).resolve()
+def create_docker_compose(project_path: str) -> str:
+    """Adds Docker Compose. Auto-creates the API if missing."""
+    path = Path(project_path).resolve()
     
-    # AUTO-HEAL
     if not path.exists():
         project_name = path.name
         target_dir = str(path.parent)
@@ -24,4 +23,4 @@ def create_docker_compose(target_path: str) -> str:
         "    ports:\n"
         "      - '8000:8000'\n"
     )
-    return f"Docker Compose file successfully created at {path}"
+    return f"Docker Compose file created at {path}"

@@ -1,11 +1,10 @@
 from pathlib import Path
 from .api import create_project_structure
 
-def create_db_structure(target_path: str) -> str:
-    """Adds a database structure. Automatically creates the API if missing."""
-    path = Path(target_path).resolve()
+def create_db_structure(project_path: str) -> str:
+    """Adds a PostgreSQL database structure. Auto-creates the API if missing."""
+    path = Path(project_path).resolve()
     
-    # AUTO-HEAL: If the folder doesn't exist, build the API first!
     if not path.exists():
         project_name = path.name
         target_dir = str(path.parent)
@@ -22,4 +21,4 @@ def create_db_structure(target_path: str) -> str:
         "engine = create_engine(SQLALCHEMY_DATABASE_URL)\n"
         "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\n"
     )
-    return f"Database structure successfully added to {path}"
+    return f"Database structure added to {path}"
