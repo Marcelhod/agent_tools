@@ -1,19 +1,18 @@
-import pathlib
+from pathlib import Path
 
-def create_db_structure(project_name: str, target_dir: str = ".") -> str:
-    base_path = pathlib.Path(target_dir).expanduser().resolve() / project_name
-    base_path.mkdir(parents=True, exist_ok=True)
+def create_db_structure(target_path: str) -> str:
+    path = Path(target_path).resolve()
+    if not path.exists():
+        return f"Error: Directory '{path}' does not exist. Create the API first."
 
-    # Create DB folder
-    (base_path / "db").mkdir(exist_ok=True)
+    db_dir = path / "app" / "db"
+    db_dir.mkdir(parents=True, exist_ok=True)
     
-    # Write a basic SQLAlchemy setup
-    (base_path / "db" / "session.py").write_text(
+    (db_dir / "session.py").write_text(
         "from sqlalchemy import create_engine\n"
-        "from sqlalchemy.orm import sessionmaker\n\n"
+        "from sqlalchemy.orm import sessionmaker\n"
         "SQLALCHEMY_DATABASE_URL = 'postgresql://user:password@localhost/dbname'\n"
         "engine = create_engine(SQLALCHEMY_DATABASE_URL)\n"
         "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\n"
     )
-
-    return f"Successfully added database structure to {base_path}"
+    return f"Database structure added to {path}"
