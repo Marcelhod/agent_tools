@@ -1,50 +1,38 @@
-# api-builder
+# Agent Tools (MCP Server)
 
-An MCP (Model Context Protocol) server that lets AI agents scaffold complete FastAPI projects and manage their dependencies.
+An MCP (Model Context Protocol) server that enables AI agents to autonomously scaffold production-ready FastAPI applications, complete with databases, authentication, and Docker infrastructure.
 
-## What it does
+## 🚀 What it does
 
-- `scaffold_api` — Creates a ready-to-run FastAPI project (app package, routers, Dockerfile, .gitignore, dependencies installed).
-- `upgrade_deps` — Upgrades a uv project's locked dependencies and syncs the environment.
+This tool gives AI assistants (like Continue, Cursor, or Claude Desktop) the ability to build real backend applications directly on your local machine.
 
-## Why
+* `scaffold_database` — Adds a PostgreSQL database structure (SQLAlchemy). **Features "Auto-Heal":** If the API project doesn't exist yet, this tool will automatically generate the full FastAPI project structure first, then inject the database.
+* `scaffold_auth` — Adds JWT authentication (passlib, python-jose) with login/register routes to an existing project.
+* `scaffold_docker` — Generates a `docker-compose.yml` to orchestrate the API and Database.
 
-Setting up a new FastAPI project by hand is repetitive. This tool lets you tell your AI assistant "create a FastAPI project called X" and have it actually do it, inside your editor.
+## 💡 Why?
 
-## Requirements
+Setting up a new backend by hand is repetitive. This tool lets you tell your AI assistant: *"Create a full-stack app called test-app, add a database, add JWT auth, and add Docker"*—and have it actually do it, directly inside your editor.
 
-- Python >= 3.10
-- [uv](https://docs.astral.sh/uv/)
-- An MCP-compatible client (e.g. Continue in VS Code)
+## 📋 Requirements
 
-## Usage
+* Python >= 3.10
+* [uv](https://docs.astral.sh/uv/) (for packaging and running)
+* An MCP-compatible client (e.g., Continue in VS Code)
 
-### With Continue (MCP)
+## 🛠️ Usage
 
-Add to your Continue MCP config:
+You don't need to clone this repository. You can run it directly via `uvx`.
+
+### With Continue (VS Code)
+
+Add this to your Continue `config.yaml`:
 
 ```yaml
 mcpServers:
-  - name: API Builder
-    type: stdio
-    command: uv
+  - name: Agent tools
+    command: uvx
     args:
-      - run
-      - --directory
-      - /path/to/api-builder
-      - api-builder
-```
-
-Then in Agent mode, ask: "Create a FastAPI project called demo in ~/projects."
-
-### Standalone
-
-If you want to call the underlying function directly without an MCP client:
-
-```bash
-uv run python -c "from api_builder import create_project_structure; print(create_project_structure('demo'))"
-```
-
-## Tech
-
-Python, MCP SDK, uv, FastAPI.
+      - "--from"
+      - "git+https://github.com/Marcelhod/agent_tools.git"
+      - "agent-tools"

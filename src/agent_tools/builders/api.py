@@ -31,14 +31,19 @@ def create_project_structure(project_name: str, target_dir: str = ".") -> str:
         # 4. Install dependencies
         subprocess.run(["uv", "add", "fastapi", "uvicorn[standard]"], cwd=target_path, capture_output=True, text=True, check=True)
         
-        # 4.5 FORCE LOCK FILE (The Fix)
+        # 4.5 Force generate the lock file
         subprocess.run(["uv", "lock"], cwd=target_path, capture_output=True, text=True, check=True)
 
-        # 5. Dockerfile
+        # 4.6 Fix the pyproject.toml (Prevent Docker src/ error)
+        pyproject_path = target_path / "pyproject.toml"
+        with open(pyproject_path, "a") as f:
+            f.write("\n[tool.uv]\npackage = false\n")
+
+        # 5. Bulletproof Dockerfile
         (target_path / "Dockerfile").write_text(
             "FROM python:3.12-slim\n"
             "WORKDIR /app\n"
-            "COPY pyproject.toml uv.lock ./\n"
+            "COPY pyproject.toml uv.lock .\n"
             "RUN pip install uv && uv sync --frozen\n"
             "COPY . .\n"
             "CMD [\"uv\", \"run\", \"uvicorn\", \"app.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\n"

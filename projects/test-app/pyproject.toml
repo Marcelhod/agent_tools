@@ -1,0 +1,25 @@
+[project]
+name = "test-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Marcel Hodroj", email = "marcel@easy-trademarks.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.163.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-jose[cryptography]>=3.5.0",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[project.scripts]
+test-app = "test_app:main"
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = false
