@@ -1,10 +1,16 @@
 from pathlib import Path
 import subprocess
+from .api import create_project_structure
 
 def create_auth_structure(target_path: str) -> str:
+    """Adds JWT authentication. Automatically creates the API if missing."""
     path = Path(target_path).resolve()
+    
+    # AUTO-HEAL
     if not path.exists():
-        return f"Error: Directory '{path}' does not exist. Create the API first."
+        project_name = path.name
+        target_dir = str(path.parent)
+        create_project_structure(project_name, target_dir)
 
     auth_dir = path / "app" / "auth"
     auth_dir.mkdir(parents=True, exist_ok=True)
@@ -18,5 +24,8 @@ def create_auth_structure(target_path: str) -> str:
         "    return {'message': 'Login endpoint'}\n"
     )
 
-    subprocess.run(["uv", "add", "passlib[bcrypt]", "python-jose[cryptography]"], cwd=path, capture_output=True)
-    return f"Auth structure added to {path}"
+    try:
+        subprocess.run(["uv", "add", "passlib[bcrypt]", "python-jose[cryptography]"], cwd=path, capture_output=True, text=True, check=True)
+        return f"Auth structure successfully added to {path}"
+    except subprocess.CalledProcessError as e:
+        return f"Auth files created, but dependency install failed: {e.stderr}"
