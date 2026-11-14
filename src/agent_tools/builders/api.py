@@ -30,6 +30,9 @@ def create_project_structure(project_name: str, target_dir: str = ".") -> str:
 
         # 4. Install dependencies
         subprocess.run(["uv", "add", "fastapi", "uvicorn[standard]"], cwd=target_path, capture_output=True, text=True, check=True)
+        
+        # 4.5 FORCE LOCK FILE (The Fix)
+        subprocess.run(["uv", "lock"], cwd=target_path, capture_output=True, text=True, check=True)
 
         # 5. Dockerfile
         (target_path / "Dockerfile").write_text(
