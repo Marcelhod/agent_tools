@@ -43,8 +43,8 @@ def create_project_structure(project_name: str, target_dir: str = ".") -> str:
         (target_path / "Dockerfile").write_text(
             "FROM python:3.12-slim\n"
             "WORKDIR /app\n"
-            "COPY pyproject.toml uv.lock .\n"
-            "RUN pip install uv && uv sync --frozen\n"
+            "COPY pyproject.toml .\n"
+            "RUN pip install uv && uv sync \n"
             "COPY . .\n"
             "CMD [\"uv\", \"run\", \"uvicorn\", \"app.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\n"
         )
